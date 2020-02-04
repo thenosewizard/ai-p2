@@ -1,13 +1,15 @@
 import json
+import pandas as pd
 import requests
+from pandas.io.json import json_normalize
 import os
 
 ################
-filename = "csgo1.json"
-appid = "730"
+filename = "overCooked"
+appid = "728880"
 ################
 
-filename = os.getcwd() + "/reviews/AI/" + filename + '.json'
+filename = os.getcwd() + "/../data/dwjson/" + filename + '.json'
 
 #getting the reviews from the steam api
 def get_reviews_2(appid, num_iterations=0, filename=""):
@@ -53,14 +55,6 @@ def clean_reviews(filename):
     with open('edited.json', 'w') as file:
         file.write(filedata)
 
-#converts json to csv
-def convertFile(fileNamePath):
-	with open(fileNamePath) as f:
-    	d = json.load(f)
-	df_steam = []
-	for i in range(len(d)):
-    	df_1 = json_normalize(d[i])
-    	df_steam.append(df_1)
-	df = pd.concat(df_steam)
-	df.to_csv(r''+fileNamePath)
 
+get_reviews_2(appid, 100, filename)
+clean_reviews(filename)
